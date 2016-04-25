@@ -20,7 +20,9 @@ class Game
   def merge(name)
     members = @tribes[0].members
     @tribes[1].members.each { |member| members << member }
-    Tribe.new(name: name, members: members)
+    tribe = Tribe.new(name: name, members: members)
+    @tribes.push tribe
+    return tribe
   end
 
   def individual_immunity_challenge
