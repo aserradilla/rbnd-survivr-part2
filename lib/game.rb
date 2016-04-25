@@ -21,11 +21,12 @@ class Game
     members = @tribes[0].members
     @tribes[1].members.each { |member| members << member }
     tribe = Tribe.new(name: name, members: members)
+    clear_tribes
     @tribes.push tribe
     return tribe
   end
 
   def individual_immunity_challenge
-    immunity_challenge.tribal_council
+    @tribes.first.members.shuffle.first
   end
 end

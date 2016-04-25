@@ -4,7 +4,7 @@ class Tribe
   def initialize(options = {})
     @name = options[:name] if options[:name]
     @members = options[:members] if options[:members]
-    puts "Created #{@name} tribe."
+    puts "Created " + @name.red + " tribe."
   end
 
   def to_s
@@ -12,6 +12,8 @@ class Tribe
   end
 
   def tribal_council(options = {})
-    @members.pop if @members.last != options[:inmune]
+    voted = @members.select {|member| member != options[:immune]}.sample
+    @members.delete(voted)
+    return voted
   end
 end

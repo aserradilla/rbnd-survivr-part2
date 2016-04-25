@@ -14,7 +14,7 @@ class Jury
     finalists.each { |finalist| votes_hash["#{finalist}"] = 0 }
     @members.each do |member|
       finalist_voted = finalists.shuffle.first
-      puts "I vote #{finalist_voted}."
+      puts "#{member.name.capitalize} cast their vote to #{finalist_voted}."
       votes_hash["#{finalist_voted}"] += 1
     end
     return votes_hash
@@ -22,7 +22,7 @@ class Jury
 
   def report_votes(final_votes)
     final_votes.each do |key, value|
-      puts "#{key} has #{value} votes!"
+      puts "#{key} received #{value} votes!"
     end
   end
 

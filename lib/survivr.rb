@@ -3,6 +3,8 @@ require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
 
+require 'colorizr'
+
 #After your tests pass, uncomment this code below
 #=========================================================
 # Create an array of twenty hopefuls to compete on the island of Borneo
@@ -22,22 +24,35 @@ require_relative "jury"
 def phase_one
   contestants = []
   8.times do
-    contestants.push @borneo.individual_immunity_challenge
+    tribe = @borneo.immunity_challenge
+    voted = tribe.tribal_council
+    puts "#{voted.name.capitalize} was voted off."
+    contestants.push voted
   end
+  puts ""
   contestants.length
 end
 
 def phase_two
   contestants = []
   3.times do
-    contestants.push @merge_tribe.tribal_council
+    inmune = @borneo.individual_immunity_challenge
+    puts "#{inmune.name.capitalize} won the individual inmune challenge and is safe from elimination"
+    voted = @merge_tribe.tribal_council(inmune: inmune)
+    puts "#{voted.name.capitalize} was voted off."
+    puts
+    contestants.push voted
   end
   contestants.length
 end
 
 def phase_three
   7.times do
-    @jury.add_member @merge_tribe.tribal_council
+    inmune = @borneo.individual_immunity_challenge
+    puts "#{inmune.name.capitalize} won the individual inmune challenge and is safe from elimination"
+    member = @merge_tribe.tribal_council(inmune: inmune)
+    puts "#{member.name.capitalize} is member #{@jury.members.length+1} of the jury."
+    @jury.add_member member
   end
   @jury.members.length
 end
@@ -45,13 +60,16 @@ end
 
 # If all the tests pass, the code below should run the entire simulation!!
 #=========================================================
+puts
 phase_one #8 eliminations
 @merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
-# p @borneo.tribes.length
+puts ""
 phase_two #3 more eliminations
 @jury = Jury.new
 phase_three #7 elminiations become jury members
 finalists = @merge_tribe.members #set finalists
 vote_results = @jury.cast_votes(finalists) #Jury members report votes
+puts
 @jury.report_votes(vote_results) #Jury announces their votes
+puts
 @jury.announce_winner(vote_results) #Jury announces final winner
