@@ -38,7 +38,7 @@ def phase_two
   3.times do
     inmune = @borneo.individual_immunity_challenge
     puts "#{inmune.name.capitalize} won the individual inmune challenge and is safe from elimination"
-    voted = @merge_tribe.tribal_council(inmune: inmune)
+    voted = @borneo.tribes.first.tribal_council(inmune: inmune)
     puts "#{voted.name.capitalize} was voted off."
     puts
     contestants.push voted
@@ -50,7 +50,7 @@ def phase_three
   7.times do
     inmune = @borneo.individual_immunity_challenge
     puts "#{inmune.name.capitalize} won the individual inmune challenge and is safe from elimination"
-    member = @merge_tribe.tribal_council(inmune: inmune)
+    member = @borneo.tribes.first.tribal_council(inmune: inmune)
     puts "#{member.name.capitalize} is member #{@jury.members.length+1} of the jury."
     @jury.add_member member
   end

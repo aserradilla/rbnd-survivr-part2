@@ -13,7 +13,7 @@ class Jury
     votes_hash = {}
     finalists.each { |finalist| votes_hash["#{finalist}"] = 0 }
     @members.each do |member|
-      finalist_voted = finalists.shuffle.first
+      finalist_voted = finalists.sample
       puts "#{member.name.capitalize} cast their vote to #{finalist_voted}."
       votes_hash["#{finalist_voted}"] += 1
     end
@@ -27,8 +27,7 @@ class Jury
   end
 
   def announce_winner(final_votes)
-    max_votes = final_votes.values.max
-    winner = final_votes.select { |k, v| v == max_votes }.keys.first
+    winner = final_votes.max_by{|key, value| final_votes[key]}[0]
     puts "The winner is #{winner}!"
     return winner
   end
